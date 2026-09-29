@@ -8,7 +8,6 @@ using UnityEngine.UI;
 ///   bodyText    - infoText
 ///   image       - infoImage (optional, hidden if none)
 ///   closeButton - hides the panel
-/// Subscribe ConstellationController.OnStarClicked to Show(StarInfo).
 /// </summary>
 public class InfoPopupUI : MonoBehaviour
 {
@@ -24,18 +23,22 @@ public class InfoPopupUI : MonoBehaviour
         Hide();
     }
 
-    public void Show(StarInfo star)
+    public void Show(StarPresenter star)
     {
         if (star == null) return;
+        Show(star.starName, star.infoText, star.infoImage, star.distanceLightYears);
+    }
 
-        if (titleText != null) titleText.text = star.starName;
+    public void Show(string starName, string infoText, Sprite infoImage, float distanceLightYears)
+    {
+        if (titleText != null) titleText.text = starName;
         if (bodyText != null)
-            bodyText.text = $"{star.infoText}\n\nDistance: ~{star.distanceLightYears:0} light years";
+            bodyText.text = $"{infoText}\n\nDistance: ~{distanceLightYears:0} light years";
 
         if (image != null)
         {
-            image.sprite = star.infoImage;
-            image.enabled = star.infoImage != null;
+            image.sprite = infoImage;
+            image.enabled = infoImage != null;
         }
 
         if (panelRoot != null) panelRoot.SetActive(true);
