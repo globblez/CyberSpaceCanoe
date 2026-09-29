@@ -15,6 +15,8 @@ public class StarPresenter : MonoBehaviour
     public Sprite infoImage;
     [Tooltip("True distance from Earth, in light years.")]
     public float distanceLightYears = 500f;
+    [Tooltip("Star's radius compared to the Sun (e.g. 1000 = 1000x the Sun's radius). Used to show an Earth-comparison in the popup.")]
+    public float radiusInSolarRadii = 1f;
 
     [Header("Gamepad highlight")]
     public float pulseSpeed = 4f;
