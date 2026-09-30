@@ -1,9 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
+
 
 public class CameraController : MonoBehaviour
 {
+     
     [Range(0, 0.5f)]
     [SerializeField] private float speed = 0.1f;
+
+    // [SerializeField] private Camera centerCam;
+    // [SerializeField] private Camera leftCam;
+    // [SerializeField] private Camera rightCam;
+    
+    [SerializeField] private GameObject ccHub;
 
 
     // Update is called once per frame
@@ -17,12 +26,12 @@ public class CameraController : MonoBehaviour
         //     print($"Vertical: {vert} \nHorizontal: {hor}");
         // }
 
-        //Up  down
-        Camera.main.transform.RotateAround(Camera.main.transform.position, 
-                                            Camera.main.transform.right, -verticalPos);
+
+        ccHub.transform.RotateAround(ccHub.transform.position, 
+                                            ccHub.transform.right, -verticalPos);
         //Left right
-        Camera.main.transform.RotateAround(Camera.main.transform.position, 
-                                             Camera.main.transform.up, horizontalPos); 
+        ccHub.transform.RotateAround(ccHub.transform.position, 
+                                             ccHub.transform.up, horizontalPos);
 
         return;
     }
