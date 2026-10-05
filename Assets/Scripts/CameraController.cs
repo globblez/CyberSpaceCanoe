@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CameraController : MonoBehaviour
 {
      
-    [Range(0, 0.5f)]
+    [Range(0, 10)]
     [SerializeField] private float speed = 0.1f;
 
     // [SerializeField] private Camera centerCam;
@@ -18,8 +18,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float verticalPos = Input.GetAxis("Vertical") * speed;
-        float horizontalPos = Input.GetAxis("Horizontal") * speed;
+        float verticalPos = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float horizontalPos = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         
         // if (vert != 0 || hor != 0)
         // {
