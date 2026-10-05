@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class CameraController : MonoBehaviour
 {
      
-    [Range(0, 10)]
-    [SerializeField] private float speed = 0.1f;
+    [Range(0, 30)]
+    [SerializeField] private float speed = 10.0f;
 
     // [SerializeField] private Camera centerCam;
     // [SerializeField] private Camera leftCam;
