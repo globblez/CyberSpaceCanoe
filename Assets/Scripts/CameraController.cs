@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 
 public class CameraController : MonoBehaviour
@@ -18,9 +20,17 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float verticalPos = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        Gamepad gamepad = Gamepad.current;
+        if (gamepad == null) return;
+
+        // Left DPAD joystick is for pitch and yaw
+        float horizontalPos = gamepad.rightStick.ReadValue().x; // = Input.GetAxis("Horizontal2");
+        float verticalPos = gamepad.rightStick.ReadValue().y; // = Input.GetAxis("Vertical2");
+
+        /*float verticalPos = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         float horizontalPos = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        
+        */
+
         // if (vert != 0 || hor != 0)
         // {
         //     print($"Vertical: {vert} \nHorizontal: {hor}");

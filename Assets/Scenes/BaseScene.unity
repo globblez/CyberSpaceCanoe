@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ba9bb8cdbe7409ba431584fac10367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  speed: 8.09
+  speed: 4.5
   ccHub: {fileID: 374115604}
 --- !u!1 &737178018 stripped
 GameObject:
@@ -994,12 +994,16 @@ PrefabInstance:
       value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 931835107254585294, guid: 5e7c7f63928158a41a61f235324e98ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 931835107254585294, guid: 5e7c7f63928158a41a61f235324e98ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.75
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 931835107254585294, guid: 5e7c7f63928158a41a61f235324e98ab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.282
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4506445215331903481, guid: 5e7c7f63928158a41a61f235324e98ab, type: 3}
       propertyPath: m_Enabled
