@@ -112,7 +112,7 @@ public class StarField : MonoBehaviour
             Vector3 pos1 = starObjects[s_index1].transform.position;
             Vector3 pos2 = starObjects[s_index2].transform.position;
 
-            Vector3 dir = (pos2 - pos1).normalized * 4;
+            Vector3 dir = (pos2 - pos1).normalized * 5;
 
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, pos1 + dir); //Add dir to end closer to pos2
