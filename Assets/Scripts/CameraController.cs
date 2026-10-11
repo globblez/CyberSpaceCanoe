@@ -20,22 +20,23 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Gamepad gamepad = Gamepad.current;
-        if (gamepad == null) return;
+        // Gamepad gamepad = Gamepad.current;
+        // if (gamepad == null) return;
 
         // Left DPAD joystick is for pitch and yaw
-        float horizontalPos = gamepad.rightStick.ReadValue().x; // = Input.GetAxis("Horizontal2");
-        float verticalPos = gamepad.rightStick.ReadValue().y; // = Input.GetAxis("Vertical2");
+        // float horizontalPos = gamepad.rightStick.ReadValue().x; // = Input.GetAxis("Horizontal2");
+        // float verticalPos = gamepad.rightStick.ReadValue().y; // = Input.GetAxis("Vertical2");
 
-        /*float verticalPos = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        float verticalPos = Input.GetAxis("Vertical") * speed * Time.deltaTime;
         float horizontalPos = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        */
 
-        // if (vert != 0 || hor != 0)
-        // {
-        //     print($"Vertical: {vert} \nHorizontal: {hor}");
-        // }
+        if (verticalPos != 0 || horizontalPos != 0)
+        {
+            print($"Vertical: {verticalPos} \nHorizontal: {horizontalPos}");
+        }
 
+        // transform.RotateAround(transform.position, transform.right, -verticalPos);
+        // transform.RotateAround(transform.position, transform.up, horizontalPos);
 
         ccHub.transform.RotateAround(ccHub.transform.position, 
                                             ccHub.transform.right, -verticalPos);

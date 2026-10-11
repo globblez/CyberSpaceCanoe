@@ -14,7 +14,10 @@ public class StarField : MonoBehaviour
 
     private readonly int starFieldScale = 400; //Distance within camera's clipping plane
 
-    private bool orionVisible = false;
+    private bool constSwitch = true;
+
+    private List<(int[], List<(int, int)>)> constellations;
+    private Dictionary<int, GameObject> constellationsVisible = new();
 
     void Start()
     {
@@ -27,7 +30,6 @@ public class StarField : MonoBehaviour
         foreach(StarDataLoader.Star star in stars)
         {
             GameObject stargo = GameObject.CreatePrimitive(PrimitiveType.Quad); //Creates 2D plane game object
-
 
             stargo.transform.parent = transform; //Set parent to camera holder. Starfield will travel w/ camera
             stargo.name = $"HR {star.catalog_number}"; //Set star name
@@ -46,6 +48,11 @@ public class StarField : MonoBehaviour
 
             starObjects.Add(stargo);
         }
+
+        constellations = new() {orionCon, ursaMajorCon, ursaMinorCon, 
+                                bootesCon, taurusCon, scorpiusCon};
+        
+        if (constSwitch) CreateAll();
     }
 
     void OnValidate()
@@ -61,11 +68,42 @@ public class StarField : MonoBehaviour
         }
     }
 
-    private readonly (int[], List<(int, int)>) orionConst = (
+    private readonly (int[], List<(int, int)>) orionCon = (
         new int[] { 2061, 1907, 1790, 1948, 1903, 1852, 2004, 1713 },
         new() { (2061, 1907), (1907, 1790), (1852, 1713), 
                 (1903, 1852), (1948, 1903), (1948, 2061), 
                 (1948, 2004), (1790, 1852) });
+
+    private readonly (int[], List<(int, int)>) ursaMajorCon = (
+        new int[] { 5191, 5054, 4905, 4660, 4301, 4554, 4295 },
+        new() { (5191, 5054), (5054, 4905), (4905, 4660), 
+                (4660, 4301), (4660, 4554), (4554, 4295),
+                (4295, 4301) });
+
+    private readonly (int[], List<(int, int)>) ursaMinorCon = (
+        new int[] { 5735, 6116, 5563, 5903, 6332, 6789, 424 },
+        new() { (5735, 6116), (5735, 5563), (6116, 5903), 
+                (5563, 5903), (5903, 6322), (6322, 6789),
+                (6789, 424) });
+            
+    private readonly (int[], List<(int, int)>) bootesCon = (
+        new int[] { 5340, 5235, 5602, 5435, 5506, 5429, 5478, 5681 },
+        new() { (5602, 5435), (5602, 5681), (5435, 5429),
+                (5681, 5506), (5506, 5340), (5429, 5340),
+                (5340, 5235), (5340, 5478) });
+
+    private readonly (int[], List<(int, int)>) taurusCon = (
+        new int[] { 1457, 1791, 1346, 1373, 1409, 1910, 1165, 1239, 1239, 1030, 1165 }, 
+        new() { (1910, 1457), (1457, 1411), (1411, 1346),
+                (1791, 1409), (1409, 1373), (1373, 1346),
+                (1346, 1239), (1239, 1030) });
+
+    private readonly (int[], List<(int, int)>) scorpiusCon = (
+        new int[] { 6134, 5984, 5953, 6241, 6553, 6527, 6380, 6262, 6615, 6508, 6084, 6165, 5944 },
+        new() { (5984, 5953), (5953, 5944), (5953, 6084),
+                (6084, 6134), (6134, 6165), (6165, 6241),
+                (6241, 6262), (6262, 6380), (6380, 6553),
+                (6553, 6615), (6615, 6527), (6527, 6508) });
 
     private void Update()
     {
@@ -75,25 +113,43 @@ public class StarField : MonoBehaviour
 
     void ToggleConstellation()
     {
-        if (orionVisible == false)
-            CreateConstellation();
+        if (constSwitch == false)
+            CreateAll();
         else
-            DeleteConstellation();
+            DeleteAll();
 
-        orionVisible = !orionVisible;
+        constSwitch = !constSwitch;
     }
 
-    void CreateConstellation()
+    void CreateAll()
     {
-        int[] constellation = orionConst.Item1;
-        List<(int, int)> lines = orionConst.Item2;
+        if (constellations.Count <= 0) 
+            return;
+
+        for (int i = 0; i < constellations.Count; i++)
+        {
+            CreateConstellation(i);
+        }
+    }
+
+    void CreateConstellation(int index)
+    {
+        if (index < 0 || index >= constellations.Count) //Error checking
+        {
+            Debug.Log("Index is not in range. Cannot create.");
+            return;
+        }
+
+        
+        int[] constellation = constellations[index].Item1;
+        List<(int, int)> lines = constellations[index].Item2;
 
         foreach (int starNumber in constellation)
         {
             starObjects[starNumber - 1].GetComponent<MeshRenderer>().material.SetFloat("_Size", Mathf.Lerp(starSizeMin, starSizeMax * 2, stars[starNumber - 1].size));
         }
 
-        GameObject constellationHolder = new("Orion");
+        GameObject constellationHolder = new($"Constellation #{index}");
         constellationHolder.transform.parent = transform;
 
         foreach( (int, int) l in lines)
@@ -118,19 +174,38 @@ public class StarField : MonoBehaviour
             lineRenderer.SetPosition(0, pos1 + dir); //Add dir to end closer to pos2
             lineRenderer.SetPosition(1, pos2 - dir); //Sub dir to end closer to pos1
         }
+
+        constellationsVisible.Add(index, constellationHolder);
     }
 
-    void DeleteConstellation()
+    void DeleteAll()
     {
-        int[] constellation = orionConst.Item1;
-        List<(int, int)> lines = orionConst.Item2;
+        if (constellations.Count <= 0) 
+            return;
+
+        for (int i = 0; i < constellations.Count; i++)
+        {
+            DeleteConstellation(i);
+        }
+    }
+
+    void DeleteConstellation(int index)
+    {
+        if (index < 0 || index >= constellations.Count) //Error checking
+        {
+            Debug.Log("Index is not in range. Cannot delete.");
+            return;
+        }
+
+        int[] constellation = constellations[index].Item1;
+        List<(int, int)> lines = constellations[index].Item2;
 
         foreach (int starNumber in constellation)
         {
             starObjects[starNumber - 1].GetComponent<MeshRenderer>().material.SetFloat("_Size", Mathf.Lerp(starSizeMin, starSizeMax, stars[starNumber - 1].size));
         }
 
-        Destroy(GameObject.Find("Orion"));
-
+        Destroy(constellationsVisible[index]); //Delete indexed const
+        constellationsVisible.Remove(index);   //Remove from visible container
     }
-}   
+}
