@@ -46,6 +46,10 @@ public class StarField : MonoBehaviour
 
             material.color = star.s_color;
 
+
+            //NEW STUFF
+            stargo.AddComponent<StarBehavior>();
+
             starObjects.Add(stargo);
         }
 

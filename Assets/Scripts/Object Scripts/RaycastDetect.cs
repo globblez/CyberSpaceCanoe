@@ -8,11 +8,16 @@ public class RaycastDetect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out var hit, Mathf.Infinity, mask))
+        var ray = new Ray(this.transform.position, this.transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 1000))
         {
-            var obj = hit.collider.gameObject;
+            GameObject lastHit = hit.transform.gameObject;
 
-            print(obj.name);
+            print(lastHit.name);
         }
+
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(transform.forward) * 400, Color.green);
     }
 }
