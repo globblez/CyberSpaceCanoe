@@ -54,7 +54,8 @@ public class StarField : MonoBehaviour
         }
 
         constellations = new() {orionCon, ursaMajorCon, ursaMinorCon, 
-                                bootesCon, taurusCon, scorpiusCon};
+                                bootesCon, taurusCon, scorpiusCon,
+                                canisMajorCon, andromedaCon};
         
         if (constSwitch) CreateAll();
     }
@@ -108,6 +109,21 @@ public class StarField : MonoBehaviour
                 (6084, 6134), (6134, 6165), (6165, 6241),
                 (6241, 6262), (6262, 6380), (6380, 6553),
                 (6553, 6615), (6615, 6527), (6527, 6508) });
+
+    private readonly (int[], List<(int, int)>) canisMajorCon = (
+        new int[] { 2491, 2580, 2653, 2294, 2693, 2574, 2657, 2827, 2596, 2429, 2618 },
+        new() { (2574, 2657), (2574, 2596), (2657, 2596), 
+                (2596, 2491), (2491, 2653), (2491, 2294),
+                (2294, 2429), (2429, 2580), (2580, 2618),
+                (2618, 2693), (2693, 2827), (2693, 2653) });
+
+    private readonly (int[], List<(int, int)>) andromedaCon = (
+        new int[] { 15, 337, 603, 163, 165, 8965, 8961, 68, 271, 215, 8762, 8976, 154, 269, 464 },
+        new() { (271, 215), (215, 163), (163, 165), 
+                (165, 15), (165, 337), (165, 154),
+                (337, 603), (337, 269), (269, 464),
+                (337, 154), (154, 68), (68, 8965),
+                (8965, 8762), (8965, 8976), (8976, 8961) });
 
     private void Update()
     {
