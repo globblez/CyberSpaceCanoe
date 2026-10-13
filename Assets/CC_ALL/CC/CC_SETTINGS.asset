@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CC_SETTINGS
   invertStereo: 0
   eyeSeparation: 0.061
-  stereoMode: 1
+  stereoMode: 2
   ccConfigurationFile: C:\CCUnityConfig.xml
