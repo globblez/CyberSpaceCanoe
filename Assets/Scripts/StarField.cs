@@ -16,7 +16,7 @@ public class StarField : MonoBehaviour
 
     private bool constSwitch = true;
 
-    private List<(int[], List<(int, int)>)> constellations;
+    public List<(int[], List<(int, int)>)> constellations;
     private Dictionary<int, GameObject> constellationsVisible = new();
 
     void Start()

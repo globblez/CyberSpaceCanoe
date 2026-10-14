@@ -9,6 +9,8 @@ public class ConstellationDetector : MonoBehaviour
     [Space(20)]
     [SerializeField] GameObject constellationParent;
 
+    [SerializeField] GameObject prefab;
+
     public List<GameObject> constellations = new List<GameObject>();
     public Dictionary<string, float> distDictionary = new();
 
@@ -16,6 +18,8 @@ public class ConstellationDetector : MonoBehaviour
     private Camera cam;
 
     private GameObject selectableObject;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,6 +64,7 @@ public class ConstellationDetector : MonoBehaviour
             else
                 Debug.Log("Nothing to select...");
         }
+
     }
 
     bool InCameraView(GameObject constellationGO)
