@@ -12,15 +12,18 @@ public class ConstellationNameUI : MonoBehaviour
     [SerializeField] GameObject settingPos;
     [SerializeField] Camera centerCam;
 
-    RectTransform rectTransform;
-    Vector3 initialScale;
-    TextMeshProUGUI textUI;
+    private RectTransform rectTransform;
+    private Vector3 initialScale;
+    private TextMeshProUGUI textUI;
 
     public float distance;
+
+    public bool activate = false;
 
     private void Awake()
     {
         transform.parent.position = Vector3.zero;
+        activate = false;
     }
 
 
@@ -57,5 +60,24 @@ public class ConstellationNameUI : MonoBehaviour
             transform.position = settingPos.transform.position;
             Debug.Log(transform.position);
         }
+
+        //Checks if player has selected this constellation...
+        if (activate)
+        {
+            activate = false;
+            ConstellationSelected();
+        }
+    }
+
+    public void SetActive()
+    {
+        if (activate == false) activate = true;
+    }
+
+    void ConstellationSelected()
+    {
+        //Do something here
+
+        print($"You have selected {starName}");
     }
 }
