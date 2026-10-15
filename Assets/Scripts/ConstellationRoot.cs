@@ -19,6 +19,29 @@ public class ConstellationRoot : MonoBehaviour
     [Tooltip("Seconds for the flat <-> free-roam transition.")]
     public float transitionDuration = 1.2f;
 
+    [Header("Label shown when the constellation is clicked")]
+    [Tooltip("Leave empty to use this GameObject's name.")]
+    public string displayName;
+    [TextArea(2, 5)] public string description;
+
+    public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+
+    private Renderer[] _renderers;
+
+    /// <summary>World-space center of everything visible in this constellation.</summary>
+    public Vector3 CenterWorld
+    {
+        get
+        {
+            if (_renderers == null) _renderers = GetComponentsInChildren<Renderer>(true);
+            if (_renderers.Length == 0) return transform.position;
+
+            Bounds b = _renderers[0].bounds;
+            for (int i = 1; i < _renderers.Length; i++) b.Encapsulate(_renderers[i].bounds);
+            return b.center;
+        }
+    }
+
     public StarPresenter[] Stars { get; private set; }
     public event System.Action<StarPresenter> OnStarClicked;
 

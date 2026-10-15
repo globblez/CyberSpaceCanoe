@@ -26,8 +26,31 @@ public class StarPresenter : MonoBehaviour
 
     private Vector3 _baseScale;
     private bool _selected;
+    private Renderer _renderer;
+    private Collider _collider;
+
+    private void Awake()
+    {
+        _renderer = GetComponentInChildren<Renderer>();
+        _collider = GetComponent<Collider>();
+    }
 
     private void Start() => _baseScale = transform.localScale;
+
+    /// <summary>
+    /// World-space point at the visual center of this star. Imported .obj
+    /// pieces often keep their transform at (0,0,0) with the geometry offset
+    /// inside the mesh, so transform.position would point at the wrong place.
+    /// </summary>
+    public Vector3 AnchorWorldPosition
+    {
+        get
+        {
+            if (_renderer != null && _renderer.bounds.size.sqrMagnitude > 0f) return _renderer.bounds.center;
+            if (_collider != null) return _collider.bounds.center;
+            return transform.position;
+        }
+    }
 
     // Mouse / touch click
     private void OnMouseDown()
